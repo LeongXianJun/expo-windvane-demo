@@ -2,7 +2,8 @@
 1. clone the repo
 2. run `npm install`
 3. run `npx expo prebuild -p ios`
-4. run `npm run ios`
+4. as soon as seeing `cocoaspod installing`, we can quit the process now and run `pod install` manually (Applicable if running these steps for the first time, because of the missing credential to download EMAS stuff)
+5. run `npm run ios`
 
 Now, we will hit the first error regarding the architecture arm64
 To resolve this, go to PODFILE in your ios folder
