@@ -14,8 +14,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "./plugins/withCustomPlugins"
+      ]
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.expo-windvane-demo"
     },
     "android": {
       "adaptiveIcon": {
