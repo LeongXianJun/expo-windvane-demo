@@ -1,0 +1,7 @@
+{
+    "platforms": ["ios", "android", "web"],
+    "ios": {},
+    "android": {
+        "modules": ["ytl.modules.windvane.WindVaneModule"]
+    }
+}
