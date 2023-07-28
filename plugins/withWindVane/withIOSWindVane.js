@@ -28,9 +28,9 @@ function updatePodfile(config) {
             latestContent = addContent({
                 src: latestContent,
                 content: [
-                    `pod 'EMASServiceManager', '~> 0.1.0'`,
-                    `pod 'EMASMiniAppAdapter', '~> 0.9.7'`,
-                    `pod 'EMASWindVaneMiniApp', '~> 0.9.8'`,
+                    `pod 'EMASServiceManager'`,
+                    `pod 'EMASMiniAppAdapter'`,
+                    `pod 'EMASWindVaneMiniApp', '0.9.5.5-nanozip'`,
                 ].join('\n'),
                 tag: 'EMAS WindVane MiniApp pods',
                 anchor: /\s+use_expo_modules!/,
