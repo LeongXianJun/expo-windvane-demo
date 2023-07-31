@@ -1,4 +1,4 @@
-## Error Reproduction Steps
+## iOS Error Reproduction Steps
 1. clone the repo
 2. run `npm install`
 3. run `npx expo prebuild -p ios`
@@ -30,3 +30,11 @@ To resolve this, go to PODFILE in your ios folder
 10. then, run `npm run ios` again
 
 Now, we will hit another error, saying undefined symbol
+
+## Android Error Reproduction Steps
+1. clone the repo
+2. run `npm install`
+3. run `npx expo prebuild -p android`
+4. run `npm run android`
+5. click on the button shown
+6. Check Android Studio logcat for more info
