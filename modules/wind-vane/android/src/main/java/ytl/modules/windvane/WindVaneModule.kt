@@ -1,5 +1,7 @@
 package ytl.modules.windvane
 
+import android.app.Application
+import android.taobao.windvane.jsbridge.WVCallBackContext
 import android.taobao.windvane.jsbridge.api.WVCamera
 import android.taobao.windvane.jsbridge.api.WVUploadService
 import com.alibaba.emas.android.mini.app.MiniAppService
@@ -15,7 +17,17 @@ import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import java.util.logging.Logger
 
+class CustomUpload: WVUploadService() {
+    override fun doUpload(p0: WVCamera.UploadParams?, p1: WVCallBackContext?) {
+        // TODO("Not yet implemented")
+    }
+}
+
+
 class WindVaneModule : Module() {
+    private val application: Application
+        get() = appContext.currentActivity?.application  ?: throw Exception("Main application is not created")
+
     private val _serviceKey = IMiniAppService::class.simpleName
 
     private var isInit: Boolean = false
@@ -50,8 +62,7 @@ class WindVaneModule : Module() {
             val appCode = config["appCode"]?.toString()
                 ?: throw Exception("\"appCode\" is missing from config")
 
-            val application = appContext.currentActivity?.application
-                ?: throw Exception("Main application is not created")
+            logger.info("application $application")
 
             // container initialization
             val initConfig: MiniAppInitConfig = MiniAppInitConfig.Builder()
@@ -62,13 +73,24 @@ class WindVaneModule : Module() {
                 .setHost(host) // Specify the domain name of Application Open Platform. The value in this sample code is provided for reference only. The domain name of the demo environment is emas-publish-intl.emas-poc.com.
                 .setAppCode(appCode)  // Obtain the App Code from Application Open Platform.
                 .build()
+
+            logger.info("initConfig: $initConfig")
+
             miniAppService = MiniAppService()
+
+            logger.info("init service")
+
             miniAppService.initialize(application, initConfig)
+
+            logger.info("register service")
+
             ServiceManager.getInstance()
                 .registerService(_serviceKey, miniAppService)
 
+            logger.info("register upload service")
+
             // The following code provides an example of initialization configurations for the WindVane miniapp container. If you want to integrate the WindVane miniapp container into the app, include the configurations.
-            WVCamera.registerUploadService(WVUploadService::class.java)
+            WVCamera.registerUploadService(CustomUpload::class.java)
 
             isInit = true
         }
