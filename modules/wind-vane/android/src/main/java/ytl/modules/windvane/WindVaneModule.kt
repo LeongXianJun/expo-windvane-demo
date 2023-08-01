@@ -1,6 +1,5 @@
 package ytl.modules.windvane
 
-import android.app.Application
 import android.taobao.windvane.jsbridge.WVCallBackContext
 import android.taobao.windvane.jsbridge.api.WVCamera
 import android.taobao.windvane.jsbridge.api.WVUploadService
@@ -17,7 +16,7 @@ import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import java.util.logging.Logger
 
-class CustomUpload: WVUploadService() {
+class CustomUpload : WVUploadService() {
     override fun doUpload(p0: WVCamera.UploadParams?, p1: WVCallBackContext?) {
         // TODO("Not yet implemented")
     }
@@ -25,9 +24,6 @@ class CustomUpload: WVUploadService() {
 
 
 class WindVaneModule : Module() {
-    private val application: Application
-        get() = appContext.currentActivity?.application  ?: throw Exception("Main application is not created")
-
     private val _serviceKey = IMiniAppService::class.simpleName
 
     private var isInit: Boolean = false
@@ -61,6 +57,9 @@ class WindVaneModule : Module() {
                 config["host"]?.toString() ?: throw Exception("\"host\" is missing from config")
             val appCode = config["appCode"]?.toString()
                 ?: throw Exception("\"appCode\" is missing from config")
+
+            val application = appContext.currentActivity?.application
+                ?: throw Exception("Main application is not created")
 
             logger.info("application $application")
 
@@ -105,8 +104,8 @@ class WindVaneModule : Module() {
                 throw Exception("\"miniAppId\" is empty")
             }
 
-            val context = appContext.currentActivity?.applicationContext
-                ?: throw Exception("application's context is not found")
+            val context = appContext.currentActivity
+                ?: throw Exception("current activity is not found")
 
             logger.info("miniAppId: $miniAppId")
 
@@ -121,7 +120,7 @@ class WindVaneModule : Module() {
                     }
 
                     override fun onFailed(errorCode: Int) {
-                        logger.info("ErrorCode: $errorCode")
+                        logger.info("Get mini app list ErrorCode: $errorCode")
                     }
 
                 }
